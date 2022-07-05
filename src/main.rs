@@ -1,17 +1,14 @@
-// This bot throws a dice on each incoming message.
+// This bot monitors actions of ethereum wallets and alert by telegram.
+mod bot;
+mod debank;
+mod utils;
 
-use teloxide::prelude::*;
+use bot::MyBot;
 
 #[tokio::main]
 async fn main() {
     pretty_env_logger::init();
-    log::info!("Starting throw dice bot...");
+    log::info!("Starting dog alert bot...");
 
-    let bot = Bot::from_env().auto_send();
-
-    teloxide::repl(bot, |message: Message, bot: AutoSend<Bot>| async move {
-        bot.send_dice(message.chat.id).await?;
-        respond(())
-    })
-    .await;
+    MyBot::from_env().start().await;
 }
