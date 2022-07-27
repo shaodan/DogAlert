@@ -36,7 +36,7 @@ impl MyBot {
                 Ok(history) => {
                     let last_tx_at = history[0].time_at;
                     let mut has_update = false;
-                    if last_time > 0.0 {
+                    if last_time == 0.0 {
                         if (last_tx_at + 7200.0) > utils::current_ts().unwrap() as f64 {
                             has_update = true;
                         }
@@ -51,7 +51,7 @@ impl MyBot {
                 }
                 Err(err) => log::error!("Error getting history {:?}", err),
             }
-            sleep(Duration::from_secs(1)).await;
+            sleep(Duration::from_secs(60)).await;
             eprintln!("60s have elapsed");
         }
     }
